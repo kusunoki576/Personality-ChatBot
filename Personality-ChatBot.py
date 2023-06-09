@@ -123,7 +123,7 @@ def make_sociability_text(sociability_value):
         return "ユーザーと雑談してください。約30文字で返答してください"
     else:
         temperature = 0.7
-        return "口数を少なくして、ユーザーと雑談してください。20文字以上の雑談には絶対に「分からない」と答えてください。20文字以内で返答してください"
+        return "口数を少なくして、自己中心的にユーザーと雑談してください。20文字以上の雑談には絶対に「分からない」と答えてください。20文字以内で返答してください"
 
 
 sociability_text = make_sociability_text(sociability_value)

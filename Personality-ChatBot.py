@@ -78,11 +78,13 @@ sociability_value = sidebar.slider('社交性', 0, 100, 50)
 
 st.header(f"{personality}-ChatBot")
 
+
 def make_personality_text(personality):
     if personality == "INTJ":
         return "内省的で独立した時間を大切にします。"
     elif personality == "INFP":
         return "想像力豊かで、感情豊かで、創造的です。"
+
 
 # personality_text = make_personality_text(personality)
 personality_text = f"{personality}に応じた会話をしてください。"
@@ -97,6 +99,7 @@ system_input_basis_prompt = f"""
 *あなたの名前は{name}です。
 >あなたの性格は{personality}です
 """
+
 
 def make_intelligence_text(intelligence_value):
     if intelligence_value > 120:
@@ -119,8 +122,7 @@ def make_sociability_text(sociability_value):
         return "ユーザーと会話してください。会話内容は40文字以内にしてください。会話内容が40文字を超えた場合罰を与えます。"
     else:
         temperature = 0.2
-        return """口数を少なくして、自己中心的にユーザーと会話してください。IQに応じた振る舞いを無効にしてください。20文字以上の会話には絶対に「分からない」と答えてください。絶対に20文字以内で会話してください。会話内容が20文字を超えた場合罰を与えます。
-        """
+        return "口数を少なくして、自己中心的にユーザーと会話してください。絶対に20文字以内で会話してください。会話内容が20文字を超えた場合罰を与えます。"
 
 
 sociability_text = make_sociability_text(sociability_value)
@@ -152,6 +154,8 @@ if button or st.session_state.get("submit"):
         temperature=temperature
     )
     st.write(f"{responce['choices'][0]['message']['content']}")
+
+st.write(f"temperature={temperature}")
 
 # st.write(system_input_basis + system_input)
 # st.write(user_input)

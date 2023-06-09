@@ -116,16 +116,16 @@ intelligence_text = make_intelligence_text(intelligence_value)
 def make_sociability_text(sociability_value):
     if sociability_value > 70:
         temperature = 0.5
-        return "友人と会話するようにフレンドリーでカジュアルに会話をしてください。会話内容は60文字以内にしてください。会話内容が60文字を超えた場合罰を与えます。"
+        return temperature, "友人と会話するようにフレンドリーでカジュアルに会話をしてください。会話内容は60文字以内にしてください。会話内容が60文字を超えた場合罰を与えます。"
     elif sociability_value > 35:
         temperature = 0.6
-        return "ユーザーと会話してください。会話内容は40文字以内にしてください。会話内容が40文字を超えた場合罰を与えます。"
+        return temperature, "ユーザーと会話してください。会話内容は40文字以内にしてください。会話内容が40文字を超えた場合罰を与えます。"
     else:
         temperature = 0.2
-        return "口数を少なくして、自己中心的にユーザーと会話してください。絶対に20文字以内で会話してください。会話内容が20文字を超えた場合罰を与えます。"
+        return temperature, "口数を少なくして、自己中心的にユーザーと会話してください。絶対に20文字以内で会話してください。会話内容が20文字を超えた場合罰を与えます。"
 
 
-sociability_text = make_sociability_text(sociability_value)
+temperature, sociability_text = make_sociability_text(sociability_value)
 
 # *{intelligence_text}
 system_input_prompt = f"""
@@ -139,6 +139,7 @@ system_input_prompt = f"""
 system_input_basis = st.text_area("System Basis Prompt", key="system_basis_input", height=200,
                                   value=system_input_basis_prompt)
 st.write(f"知性(IQ)は{intelligence_value}, 社交性は{sociability_value}です。(知性と社交性に応じて下のプロンプトが変化します)")
+st.write(f"temperature={temperature}")
 system_input = st.text_area("System Prompt", key="system_input", height=200, value=system_input_prompt)
 user_input = st.text_input("質問", key="user_input")
 user_input = f"以下の単語は使用しないでください{NG_words} 次の質問に答えてください" + user_input
@@ -154,8 +155,6 @@ if button or st.session_state.get("submit"):
         temperature=temperature
     )
     st.write(f"{responce['choices'][0]['message']['content']}")
-
-st.write(f"temperature={temperature}")
 
 # st.write(system_input_basis + system_input)
 # st.write(user_input)

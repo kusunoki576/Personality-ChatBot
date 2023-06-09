@@ -116,13 +116,13 @@ intelligence_text = make_intelligence_text(intelligence_value)
 def make_sociability_text(sociability_value):
     if sociability_value > 70:
         temperature = 0.5
-        return temperature, "友人と会話するようにフレンドリーでカジュアルに会話をしてください。会話内容は60文字以内にしてください。会話内容が60文字を超えた場合罰を与えます。"
+        return temperature, "*友人と会話するようにフレンドリーでカジュアルに会話をしてください。\n*会話内容は60文字以内にしてください。\n+会話内容が60文字を超えた場合罰を与えます。"
     elif sociability_value > 35:
         temperature = 0.6
-        return temperature, "ユーザーと会話してください。会話内容は40文字以内にしてください。会話内容が40文字を超えた場合罰を与えます。"
+        return temperature, "*ユーザーと会話してください。\n*会話内容は40文字以内にしてください。\n*会話内容が40文字を超えた場合罰を与えます。"
     else:
         temperature = 0.2
-        return temperature, "口数を少なくして、自己中心的にユーザーと会話してください。絶対に20文字以内で会話してください。会話内容が20文字を超えた場合罰を与えます。"
+        return temperature, "*口数を少なくして、自己中心的にユーザーと会話してください。\n*絶対に20文字以内で会話してください。\n*会話内容が20文字を超えた場合罰を与えます。"
 
 
 temperature, sociability_text = make_sociability_text(sociability_value)

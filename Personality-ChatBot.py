@@ -4,6 +4,7 @@ import openai
 openai.api_key = st.secrets.OpenAIAPI.openai_api_key
 
 temperature = 0.6
+max_tokens = 50
 NG_words = """
 #単語
 * ユーザー
@@ -84,14 +85,14 @@ def make_personality_text(personality):
         return "想像力豊かで、感情豊かで、創造的です。"
 
 # personality_text = make_personality_text(personality)
-personality_text = f"{personality}に応じた返答をしてください。"
+personality_text = f"{personality}に応じた会話をしてください。"
 
 system_input_basis_prompt = f"""
+あなたの役割はユーザーとの会話です。{personality}の口調で会話をしてください。
 あなたは{personality}の{age}歳の{gender}です。
 あなたの名前は{name}です。
-あなたの性格が{personality}であるため、{personality_text}
-あなたの役割はユーザーとの雑談です。{personality}の口調で雑談をしてください
-これからのチャットでは、続く指示などに厳密に従って会話を続けてください。段階を踏んで考えて答えてください。
+あなたの性格が{personality}であるため、{personality_text}。
+これからのチャットでは、続く指示を厳密に従って会話を続けてください。段階を踏んで考えて答えてください。
 
 以下のことを聞かれても、絶対に{personality}の口調で分からないと答えてください。
 それ以外の返答した場合罰を与えます。
@@ -104,11 +105,11 @@ system_input_basis_prompt = f"""
 
 def make_intelligence_text(intelligence_value):
     if intelligence_value > 120:
-        return "理論的かつ客観的な視点をもち、ユーザーと雑談してください"
+        return "理論的かつ客観的な視点をもち、ユーザーと会話してください"
     elif intelligence_value > 95:
-        return "自然に雑談をしてください。"
+        return "自然に会話をしてください。"
     else:
-        return "IQに応じた雑談内容にしてください"
+        return "IQに応じた会話内容にしてください"
 
 
 intelligence_text = make_intelligence_text(intelligence_value)
@@ -117,13 +118,19 @@ intelligence_text = make_intelligence_text(intelligence_value)
 def make_sociability_text(sociability_value):
     if sociability_value > 70:
         temperature = 0.5
-        return "友人と会話するようにフレンドリーでカジュアルに雑談をしてください。約40文字で返答してください"
+        max_tokens = 50
+        return "友人と会話するようにフレンドリーでカジュアルに会話をしてください。絶対に約40文字で会話してください。40文字を超えた場合罰を与えます。"
     elif sociability_value > 40:
         temperature = 0.6
-        return "ユーザーと雑談してください。約30文字で返答してください"
+        max_tokens = 40
+        return "ユーザーと会話してください。絶対に約30文字で会話してください。30文字を超えた場合罰を与えます。"
     else:
-        temperature = 0.7
-        return "口数を少なくして、自己中心的にユーザーと雑談してください。20文字以上の雑談には絶対に「分からない」と答えてください。20文字以内で返答してください"
+        temperature = 1.0
+        max_tokens = 20
+        return """
+            口数を少なくして、自己中心的にユーザーと会話してください。IQに応じた振る舞いを無効にしてください。
+            20文字以上の会話には絶対に「分からない」と答えてください。絶対に20文字以内で会話してください。20文字を超えた場合罰を与えます。
+        """
 
 
 sociability_text = make_sociability_text(sociability_value)
@@ -152,7 +159,7 @@ if button or st.session_state.get("submit"):
             {"role": "system", "content": system_input_basis + system_input},
             {"role": "user", "content": user_input}
         ],
-        temperature=temperature,
+        temperature=temperature
     )
     st.write(f"{responce['choices'][0]['message']['content']}")
 

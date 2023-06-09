@@ -29,6 +29,7 @@ NG_words = """
 *INTJ
 *内省的
 *独立
+*性格
 *INTP
 *ENTJ
 *ENTP

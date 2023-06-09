@@ -53,8 +53,6 @@ sidebar = st.sidebar
 name = sidebar.text_input(label="名前", value="かんな")
 gender = st.sidebar.selectbox(label="性別", options=("女性", "男性"))
 age = sidebar.text_input(label="年齢", value=17)
-intelligence_value = sidebar.slider('知性(IQ)', 80, 140, 110)
-sociability_value = sidebar.slider('社交性', 0, 100, 50)
 personalitys = (
     "INTJ",
     "INTP",
@@ -73,7 +71,9 @@ personalitys = (
     "ESTP",
     "ESFP"
 )
-personality = st.sidebar.selectbox(label="性格", options=personalitys)
+personality = st.sidebar.selectbox(label="性格", options=personalitys, index=5)
+intelligence_value = sidebar.slider('知性(IQ)', 80, 140, 110)
+sociability_value = sidebar.slider('社交性', 0, 100, 50)
 
 st.header(f"{personality}-ChatBot")
 

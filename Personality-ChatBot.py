@@ -136,7 +136,7 @@ system_input_prompt = f"""
 
 system_input_basis = st.text_area("System Basis Prompt", key="system_basis_input", height=200,
                                   value=system_input_basis_prompt)
-st.write(f"知性(IQ)は{intelligence_value}, 社交性は{sociability_value}(知性と社交性に応じて下のプロンプトが変化します)")
+st.write(f"知性(IQ)は{intelligence_value}, 社交性は{sociability_value}です。(知性と社交性に応じて下のプロンプトが変化します)")
 system_input = st.text_area("System Prompt", key="system_input", height=200, value=system_input_prompt)
 user_input = st.text_input("質問", key="user_input")
 user_input = f"以下の単語は使用しないでください{NG_words} 次の質問に答えてください" + user_input

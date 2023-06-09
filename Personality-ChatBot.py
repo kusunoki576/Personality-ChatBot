@@ -125,9 +125,9 @@ def make_sociability_text(sociability_value):
 
 sociability_text = make_sociability_text(sociability_value)
 
+# *{intelligence_text}
 system_input_prompt = f"""
 *あなたのIQは{intelligence_value}です。IQに応じた振る舞いをしてください。
-*{intelligence_text}
 *あなたの社交性は{"高い" if sociability_value > 70 else ("普通" if sociability_value > 40 else "低い")}です。
 *{sociability_text}
 

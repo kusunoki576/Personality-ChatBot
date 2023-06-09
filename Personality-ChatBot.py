@@ -89,15 +89,15 @@ def make_personality_text(personality):
 # personality_text = make_personality_text(personality)
 personality_text = f"{personality}に応じた会話をしてください。"
 
-system_input_basis_prompt = f"""
-#命令文
-ユーザーと会話をしてください
-
-#制約条件
-*これからのチャットでは、続く指示を厳密に従って会話を続けてください。段階を踏んで考えて答えてください。
-*あなたは{age}歳の{gender}です。
-*あなたの名前は{name}です。
->あなたの性格は{personality}です
+# *これからのチャットでは、続く指示を厳密に従って会話を続けてください。段階を踏んで考えて答えてください。
+system_input_basis_prompt = \
+    f"""#命令文
+    ユーザーと会話をしてください
+    
+    #制約条件
+    *あなたは{age}歳の{gender}です。
+    *あなたの名前は{name}です。
+    *あなたの性格は{personality}です
 """
 
 
@@ -116,21 +116,24 @@ intelligence_text = make_intelligence_text(intelligence_value)
 def make_sociability_text(sociability_value):
     if sociability_value > 70:
         temperature = 0.5
-        return temperature, "*友人と会話するようにフレンドリーでカジュアルに会話をしてください。\n*会話内容は60文字以内にしてください。\n*会話内容が60文字を超えた場合罰を与えます。"
+        return temperature, "*友人と会話するようにフレンドリーでカジュアルに会話をしてください。\n*会話内容は60文字以内にしてください。"
+        # return temperature, "*友人と会話するようにフレンドリーでカジュアルに会話をしてください。\n*会話内容は60文字以内にしてください。\n*会話内容が60文字を超えた場合罰を与えます。"
     elif sociability_value > 35:
         temperature = 0.6
-        return temperature, "*ユーザーと会話してください。\n*会話内容は40文字以内にしてください。\n*会話内容が40文字を超えた場合罰を与えます。"
+        return temperature, "*ユーザーと会話してください。\n*会話内容は40文字以内にしてください。"
+        # return temperature, "*ユーザーと会話してください。\n*会話内容は40文字以内にしてください。\n*会話内容が40文字を超えた場合罰を与えます。"
     else:
         temperature = 0.2
-        return temperature, "*口数を少なくして、自己中心的にユーザーと会話してください。\n*絶対に20文字以内で会話してください。\n*会話内容が20文字を超えた場合罰を与えます。"
+        return temperature, "*口数を少なくして、自己中心的にユーザーと会話してください。\n*絶対に20文字以内で会話してください。"
+        # return temperature, "*口数を少なくして、自己中心的にユーザーと会話してください。\n*絶対に20文字以内で会話してください。\n*会話内容が20文字を超えた場合罰を与えます。"
 
 
 temperature, sociability_text = make_sociability_text(sociability_value)
 
 # *{intelligence_text}
+# *あなたの社交性は{"高い" if sociability_value > 70 else ("普通" if sociability_value > 40 else "低い")}です。
 system_input_prompt = f"""
 *あなたのIQは{intelligence_value}です。IQに応じた振る舞いをしてください。
-*あなたの社交性は{"高い" if sociability_value > 70 else ("普通" if sociability_value > 40 else "低い")}です。
 {sociability_text}
 
 {NG_words}

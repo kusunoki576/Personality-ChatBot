@@ -3,7 +3,7 @@ import openai
 import utils
 import random
 
-# openai.api_key = st.secrets.OpenAIAPI.openai_api_key
+openai.api_key = st.secrets.OpenAIAPI.openai_api_key
 
 
 temperature = 0.6

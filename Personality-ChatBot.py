@@ -79,20 +79,18 @@ sociability_value = sidebar.slider('社交性', 0, 100, 50)
 
 st.header(f"{personality}-ChatBot")
 
-
-def make_personality_text(personality):
-    if personality == "INTJ":
-        return "内省的で独立した時間を大切にします。"
-    elif personality == "INFP":
-        return "想像力豊かで、感情豊かで、創造的です。"
+# def make_personality_text(personality):
+#    if personality == "INTJ":
+#        return "内省的で独立した時間を大切にします。"
+#    elif personality == "INFP":
+#        return "想像力豊かで、感情豊かで、創造的です。"
 
 
 # personality_text = make_personality_text(personality)
-personality_text = f"{personality}に応じた会話をしてください。"
+# personality_text = f"{personality}に応じた会話をしてください。"
 
 # *これからのチャットでは、続く指示を厳密に従って会話を続けてください。段階を踏んで考えて答えてください。
-system_input_basis_prompt = \
-f"""
+system_input_basis_prompt = f"""
 #命令文
 ユーザーと会話をしてください
     
@@ -147,7 +145,7 @@ st.write(f"知性(IQ)は{intelligence_value}, 社交性は{sociability_value}で
 st.write(f"temperature={temperature}")
 system_input = st.text_area("System Prompt", key="system_input", height=200, value=system_input_prompt)
 user_input = st.text_input("質問", key="user_input")
-user_input = f"以下の単語は使用しないでください{NG_words} 次の質問に答えてください" + user_input
+user_input = f"{NG_words}\n#命令\n次の質問に答えてください\n" + user_input
 
 button = st.button("Submit")
 if button or st.session_state.get("submit"):

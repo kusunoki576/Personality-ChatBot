@@ -37,6 +37,7 @@ NG_Words = f"""*{personality}
 
 system_input_prompt = f"""
 *あなたのIQは{intelligence_value}です。
+{intelligence_text}
 {sociability_text}
 
 #制約条件

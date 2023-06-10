@@ -66,11 +66,12 @@ NG_words = """
 
 def make_intelligence_text(intelligence_value):
     if intelligence_value > 120:
-        return "理論的かつ客観的な視点をもち、ユーザーと会話してください"
+        return "*あなたは上手に会話をします。"
     elif intelligence_value > 95:
-        return "自然に会話をしてください。"
+        return "*自然に会話をしてください。"
     else:
-        return "IQに応じた会話内容にしてください"
+        return "*あなたの返答は要領の悪い返答です。\n*あなたは小学3年生程度の単語のみを使用します。"
+        # return "あなたは小学3年生程度の単語のみを使用します。"
 
 
 def make_sociability_text(sociability_value):

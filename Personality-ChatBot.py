@@ -1,6 +1,7 @@
 import streamlit as st
 import openai
 import utils
+import random
 
 # openai.api_key = st.secrets.OpenAIAPI.openai_api_key
 
@@ -14,6 +15,12 @@ gender = st.sidebar.selectbox(label="性別", options=("女性", "男性"))
 age = sidebar.text_input(label="年齢", value=17)
 
 personality = st.sidebar.selectbox(label="性格", options=utils.personalitys, index=5)
+
+hobby_area = st.sidebar.selectbox(label="趣味", options=utils.hobby_list.keys(), index=6)
+# sidebar.write(hobby_area)
+# hobby = st.sidebar.selectbox(label="趣味", options=utils.hobby_list.keys(), index=random.randint(0, len(utils.hobby_list)-1))
+hobby = st.sidebar.selectbox(label="趣味詳細", options=utils.hobby_list[hobby_area], index=0)
+
 intelligence_value = sidebar.slider('知性(IQ)', 80, 140, 110)
 sociability_value = sidebar.slider('社交性', 0, 100, 50)
 
@@ -24,6 +31,8 @@ system_input_basis_prompt = f"""
 *あなたは{age}歳の{gender}です。
 *あなたの名前は{name}です。
 *あなたの性格は{personality}です
+*あなたの趣味は{hobby}です
+*あなたは趣味に関して深い知識をもっています。
 """
 
 intelligence_text = utils.make_intelligence_text(intelligence_value)

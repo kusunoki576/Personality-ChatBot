@@ -1,3 +1,5 @@
+import json
+
 personalitys = (
     "INTJ",
     "INTP",
@@ -90,3 +92,10 @@ def make_sociability_text(sociability_value):
         sociability = "*あなたは口数が少ないです。\n*あなたは自己中心的です。\n*あなたは会話が嫌いです。\n"
         txt_count = "*会話内容は絶対に20文字以内です。"
         return temperature, sociability, txt_count
+
+
+tf = open("hobbies.json", "r")
+hobby_list = json.load(tf)
+# hobby_list |= {"なし": ["なし"]}
+key = "集める"
+text = hobby_list[key]

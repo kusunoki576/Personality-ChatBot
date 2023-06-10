@@ -32,7 +32,7 @@ system_input_basis_prompt = f"""
 *あなたの名前は{name}です。
 *あなたの性格は{personality}です
 *あなたの趣味は{hobby}です
-*あなたは趣味に関して深い知識をもっています。
+*あなたは{hobby}に関して深い知識をもっています。
 """
 
 intelligence_text = utils.make_intelligence_text(intelligence_value)

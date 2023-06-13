@@ -5,7 +5,6 @@ import random
 
 openai.api_key = st.secrets.OpenAIAPI.openai_api_key
 
-
 temperature = 0.6
 max_tokens = 50
 
@@ -16,8 +15,9 @@ age = sidebar.text_input(label="年齢", value=17)
 
 personality = st.sidebar.selectbox(label="性格", options=utils.personalitys, index=5)
 
-hobby_area = st.sidebar.selectbox(label="趣味", options=utils.hobby_list.keys(), index=6)
+hobby_area = st.sidebar.selectbox(label="趣味", options=utils.hobby_list.keys(), index=(len(utils.hobby_list.keys())-1))
 # sidebar.write(hobby_area)
+
 # hobby = st.sidebar.selectbox(label="趣味", options=utils.hobby_list.keys(), index=random.randint(0, len(utils.hobby_list)-1))
 hobby = st.sidebar.selectbox(label="趣味詳細", options=utils.hobby_list[hobby_area], index=0)
 
@@ -54,6 +54,8 @@ system_input_prompt = f"""
 """
 
 new_system = f"あなたはキャラクターになりきって会話をする人です。あなたの趣味は{hobby}です。あなたは{hobby}に関して深い知識をもっています。以下の制約条件を守りつつ、次の属性がある人になりきって会話してください。"
+if hobby == "なし":
+    new_system = f"あなたはキャラクターになりきって会話をする人です。あなたの趣味はありません。以下の制約条件を守りつつ、次の属性がある人になりきって会話してください。"
 
 system_input_basis = st.text_area("System Basis Prompt", key="system_basis_input", height=200, value=system_input_basis_prompt)
 st.write(f"知性(IQ)は{intelligence_value}, 社交性は{sociability_value}です。(知性と社交性に応じて下のプロンプトが変化します)")

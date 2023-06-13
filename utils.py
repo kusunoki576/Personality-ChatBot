@@ -96,6 +96,3 @@ def make_sociability_text(sociability_value):
 
 tf = open("hobbies.json", "r")
 hobby_list = json.load(tf)
-# hobby_list |= {"なし": ["なし"]}
-key = "集める"
-text = hobby_list[key]

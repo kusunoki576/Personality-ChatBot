@@ -67,16 +67,17 @@ if 'history' not in st.session_state:
     st.session_state["history"] = []
 
 history_prompt = f"""
-以下はユーザーの発言履歴です。\n
-発言履歴から名詞を取得し、必要ならその名詞を使い、会話してください。\n
-発言履歴はユーザーの発言です。あなたとは何の関わりもないことを絶対に忘れないでください。\n
+#制約条件
+*以下はユーザーの発言履歴です。\n
+*質問への返答の時のみ、発言履歴から名詞を取得し、その名詞を使い会話してください。\n
+*発言履歴はユーザーの発言です。あなたとは何の関わりもないことを絶対に忘れないでください。\n
 #発言履歴\n
 """
 for i in range(1, len(st.session_state["history"]), 2):
     history_prompt += ("*" + st.session_state["history"][i].split(":")[1] + "\n")
 # print(st.session_state["history"])
 
-st.write(f"システムには次の命令が与えられています:\n \"{history_prompt}\"")
+st.write(f"{history_prompt}")
 # user_input = "以下の質問に答えてください\n" + st.text_input("質問", key="user_input")
 user_input = st.text_input("質問", key="user_input")
 
@@ -87,8 +88,8 @@ if button or st.session_state.get("submit") or st.session_state.get("user_input"
         # model="gpt-3.5-turbo",
         # gpt-3.5-turbo-0613 / gpt-3.5-turbo-16k
         messages=[
-            {"role": "system", "content": new_system},
-            {"role": "user", "content": system_input_basis + system_input + history_prompt + user_input},
+            {"role": "system", "content": new_system + history_prompt},
+            {"role": "user", "content": system_input_basis + system_input + user_input},
             # {"role": "assistant", "content": "".join(st.session_state["history"])}
         ],
         # prompt="".join(st.session_state["history"]),

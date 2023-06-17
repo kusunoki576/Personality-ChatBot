@@ -68,9 +68,9 @@ if 'history' not in st.session_state:
 
 history_prompt = f"""
 #制約条件\n
-*以下はユーザーの発言履歴です。\n
 *質問への返答の時のみ、発言履歴から名詞を取得し、その名詞を使い絶対に違和感の無い会話をしてください。\n
 *発言履歴はユーザーの発言です。あなたとは何の関わりもないことを絶対に忘れないでください。\n
+*以下はユーザーの発言履歴です。\n
 #発言履歴\n
 """
 for i in range(1, len(st.session_state["history"]), 2):

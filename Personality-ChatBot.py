@@ -77,10 +77,6 @@ for i in range(1, len(st.session_state["history"]), 2):
     history_prompt += ("*" + st.session_state["history"][i].split(":")[1] + "\n")
 # print(st.session_state["history"])
 
-talk_history = []
-for i in range(1, len(st.session_state["history"]), 2):
-    talk_history.append("*" + st.session_state["history"][i].split(":")[1] + "\n")
-
 st.write(f"{history_prompt}")
 # user_input = "以下の質問に答えてください\n" + st.text_input("質問", key="user_input")
 user_input = st.text_input("質問", key="user_input")
@@ -92,10 +88,9 @@ if button or st.session_state.get("submit") or st.session_state.get("user_input"
         # model="gpt-3.5-turbo",
         # gpt-3.5-turbo-0613 / gpt-3.5-turbo-16k
         messages=[
-            # {"role": "system", "content": new_system + history_prompt},
-            {"role": "system", "content": new_system},
+            {"role": "system", "content": new_system + history_prompt},
             {"role": "user", "content": system_input_basis + system_input + user_input},
-            {"role": "assistant", "content": "".join(talk_history)}
+            # {"role": "assistant", "content": "".join(st.session_state["history"])}
         ],
         # prompt="".join(st.session_state["history"]),
         temperature=temperature

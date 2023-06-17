@@ -100,7 +100,7 @@ if button or st.session_state.get("submit"):
     st.write(f"{responce['choices'][0]['message']['content']}")
     # st.write(f"{responce}")
     if len(st.session_state["history"]):
-        for s in reversed(st.session_state["history"]):
+        for s in st.session_state["history"]:
             st.write(s)
     # st.session_state["history"].append(f"{responce}")
     st.session_state["history"].append(f"{responce['choices'][0]['message']['content']}")

@@ -82,7 +82,7 @@ st.write(f"{history_prompt}")
 user_input = st.text_input("質問", key="user_input")
 
 button = st.button("Submit")
-if button or st.session_state.get("submit") or user_input:
+if button or st.session_state.get("submit"):
     responce = openai.ChatCompletion.create(
         model="gpt-3.5-turbo-0613",
         # model="gpt-3.5-turbo",
